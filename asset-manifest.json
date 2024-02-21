@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/personal_portfolio/static/css/main.d1dfcbb7.css",
+    "main.js": "/personal_portfolio/static/js/main.bb240203.js",
+    "static/js/592.7881a785.chunk.js": "/personal_portfolio/static/js/592.7881a785.chunk.js",
+    "static/media/2615-UnBatang_0613.ttf": "/personal_portfolio/static/media/2615-UnBatang_0613.0d7246658b87b3446815.ttf",
+    "static/media/BlackHanSans-Regular.ttf": "/personal_portfolio/static/media/BlackHanSans-Regular.f4f89062321390018f92.ttf",
+    "static/media/DoHyeon-Regular.ttf": "/personal_portfolio/static/media/DoHyeon-Regular.33a15385076163ccf1b8.ttf",
+    "static/media/LeagueSpartan-SemiBold.ttf": "/personal_portfolio/static/media/LeagueSpartan-SemiBold.eb71c3a8fa3a8659a3f7.ttf",
+    "static/media/LeagueSpartan-ExtraLight.ttf": "/personal_portfolio/static/media/LeagueSpartan-ExtraLight.e5765d9f727ac0dd0bab.ttf",
+    "static/media/LeagueSpartan-Regular.ttf": "/personal_portfolio/static/media/LeagueSpartan-Regular.09958bb07a94a6a4f1bb.ttf",
+    "index.html": "/personal_portfolio/index.html",
+    "main.d1dfcbb7.css.map": "/personal_portfolio/static/css/main.d1dfcbb7.css.map",
+    "main.bb240203.js.map": "/personal_portfolio/static/js/main.bb240203.js.map",
+    "592.7881a785.chunk.js.map": "/personal_portfolio/static/js/592.7881a785.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d1dfcbb7.css",
+    "static/js/main.bb240203.js"
+  ]
+}
