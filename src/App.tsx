@@ -12,6 +12,7 @@ function App() {
           <Route path="/" element={<MainENG />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/kor" element={<MainKOR />} />
+          <Route path="*" element={<MainENG />} />
         </Routes>
       </BrowserRouter>
     </>
