@@ -855,6 +855,7 @@ const PortfolioWrapper = styled.div<{ hoveredElement: string }>`
                 font-size: 22px;
                 width: 160px;
                 left: 42vw;
+                top: -2.5vw;
             }
         }
 
