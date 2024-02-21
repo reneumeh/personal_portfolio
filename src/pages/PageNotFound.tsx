@@ -5,7 +5,7 @@ export {}
 
 function PageNotFound() {
   return (
-    <div>PageNotFoundn</div>
+    <div>PageNotFound</div>
   )
 }
 
