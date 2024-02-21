@@ -239,7 +239,7 @@ function MainENG() {
         </Header>
         <Hero>
             <div className='hero-div'><img 
-                src='static/hero.png' 
+                src='static/hero1.png' 
                 alt='my_image'/>
                 </div>
             <div className='intro-1'>Hi, my name is</div> <div className='intro-2'>RENE </div> <div className='intro-3'>UMEH</div> 

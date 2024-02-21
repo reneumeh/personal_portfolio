@@ -240,7 +240,7 @@ function MainENG() {
         </Header>
         <Hero>
             <div className='hero-div'><img 
-                src='static/hero.png' 
+                src='static/hero1.png' 
                 alt='my_image'/>
                 </div>
             <div className='intro-1'>제 이름은</div> <div className='intro-2'>레네이 </div> <div className='intro-3'>우메이</div> 
