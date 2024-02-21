@@ -5,7 +5,9 @@ export {}
 
 function Blog() {
   return (
-    <div>Blogging</div>
+    <div>I'm bloggin',I'm bloggin',
+      I'm bloggin',I'm bloggin',I'm bloggin',
+    Hope you like bloggin', too</div>
   )
 }
 

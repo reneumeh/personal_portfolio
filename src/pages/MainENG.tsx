@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { useState } from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 import emailjs from '@emailjs/browser'
 
 function MainENG() {
@@ -17,6 +18,8 @@ function MainENG() {
     const emailForm = useRef(null);
 
     const [isScrolling, setScrolling] = useState(false);
+    const [isMenuOpen, setMenuOpen] = useState(false);
+    const isMobile = useIsMobile();
     const [hoveredElement, sethoveredElement] = useState("");
     const [clickedElement, setclickedElement] = useState("");
 
@@ -54,13 +57,16 @@ function MainENG() {
     });
 
     const scrollToElement = (ref: any, position= "start") => {
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: position });
+    ref.current?.scrollIntoView({ behavior: isMobile ? 'auto' :'smooth' , block: position });
     };
 
     useEffect(() => {
         const handler = (e: any) => {
             if(e.target.className == hoveredElement) {
             setclickedElement(hoveredElement);
+            }
+            if(e.target.className == "page-buttons") {
+                setMenuOpen(false);
             }
             else {
                 sethoveredElement("");
@@ -78,18 +84,22 @@ function MainENG() {
         {
             name: "Home",
             link: "/",
+            img: "static/home.png"
         },
         {
             name: "Portfolio",
             ref: Portfolio,
+            img: "static/portfolio.png"
         },
         {
             name: "Blog",
-            link:  "/blog"
+            link:  "/blog",
+            img: "static/blog.png"
         },
         {
             name: "Contact",
             ref: Contact,
+            img: "static/contact.png"
         }
     ] 
 
@@ -184,7 +194,7 @@ function MainENG() {
             section: "extracurricular"
         },
         {
-            name: "VOLUNTEERING",
+            name: "VOLUNTEER",
             explanation: "I enjoy volunteering and I have volunteered at the Seoul Welfare Center For the Elderly and the Austin Animal Center",
             image: "/static/portfolio_volunteering.png",
             section: "extracurricular"
@@ -212,26 +222,28 @@ function MainENG() {
             > 
                 <span>RENE </span>UMEH
             </a>
-            <NavBar isScrolling= {isScrolling}>
+            <NavBar isScrolling= {isScrolling} isMenuOpen= {isMenuOpen}>
                 {pages.map((page) => (
                     <div
                     key={page.name}
                     className="page-buttons"
                     onClick={() => (page.ref ? scrollToElement(page.ref) : window.location.assign(page.link))}
                 >
-                    {page.name}
+                    <img className='phone-icons' width= {20} src= {page.img} />{page.name}
                 </div>
                 ))}
+                <img className='phone-icons hamburger' width= {20} src= 'static/hamburger.png' onClick={() => {setMenuOpen(true)}}/>
+                <img className='phone-icons close'  width= {20} src= 'static/close.png' onClick={() => {setMenuOpen(false)}}/>
             </NavBar>
             <div className='language '><a className='top' href='/'>ENG</a><a className='bottom'href="/kor">KOR</a></div>
         </Header>
         <Hero>
             <div className='hero-div'><img 
-                src='static/hero1.png' 
+                src='static/hero.png' 
                 alt='my_image'/>
                 </div>
             <div className='intro-1'>Hi, my name is</div> <div className='intro-2'>RENE </div> <div className='intro-3'>UMEH</div> 
-            <div className='marquees'>
+            <div id='marquees'>
             <div className="marquee marquee--reverse marquee--hover-pause">
                 <ul className="marquee__content">
                     <li onClick= {() => scrollToElement(extraSection, "center")}>UI/UX Designer</li><li onClick= {() => scrollToElement(extraSection, "center")}>Social Media Manager</li>
@@ -365,7 +377,8 @@ const Header = styled.div<{ isScrolling: boolean }>`
     border-bottom: ${({ isScrolling }) =>
     isScrolling === true ? 'solid rgba(0, 0, 0, 0.2) 1px' : ""};
     display: flex;
-    background-color: #E7E5E0;
+    background-color: ${({ isScrolling }) =>
+    isScrolling === true ?  '#E7E5E0' : ""};
     justify-content: ${({ isScrolling }) =>
     isScrolling === true ? 'space-between' : ""};
     width: calc(100vw - 17px);
@@ -419,12 +432,28 @@ const Header = styled.div<{ isScrolling: boolean }>`
             border-radius: 0px 0px 20px 20px;
             color: black;
         }
-        }
-        
     }
+
+    @media screen and (max-width: 700px) { 
+        display: flex; 
+        justify-content: center;
+        width: 100vw;
+        .language {
+        top: 3.5em;
+        z-index: -1;
+        }
+        .logo {
+            margin: 0.3rem 0;
+        }
+    }  
     `;
 
-const NavBar = styled.div<{ isScrolling: boolean }>`
+const NavBar = styled.div<{ isScrolling: boolean, isMenuOpen: boolean }>`
+    @media screen and (min-width: 700px) {
+    .phone-icons {
+        visibility: hidden;
+        display: none;
+    }
     ${({ isScrolling }) => {
         switch (isScrolling) {
             case false:
@@ -471,10 +500,58 @@ const NavBar = styled.div<{ isScrolling: boolean }>`
                 `;
             }
         }}
+    }
+
+    @media screen and (max-width: 700px) {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background-color: #E7E5E0;
+        left: ${({ isMenuOpen }) =>
+        isMenuOpen === true ? '0vw' : '-100vw'};
+        transition: 0.5s ease all;
+        .page-buttons {
+            z-index: 99999;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-auto-rows: 10rem;
+            border-bottom: 1px solid rgba(0,0,0, 0.5);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+            font-family: Leaugue-Spartan;
+        }
+        .page-buttons:first-child {
+            margin-top: 2.5rem;
+        }
+        .page-buttons img {
+            margin: 0 10px 0 2rem;
+        }
+        .phone-icons {
+            display: block;
+            visibility: visible;
+        }
+        .hamburger {
+            position: ${({ isScrolling }) =>
+            isScrolling === true ? 'fixed' : 'absolute'};
+            z-index: -1;
+            top: ${({ isScrolling }) =>
+            isScrolling === true ? '0.5rem' :'5rem' };
+            left: ${({ isScrolling }) =>
+            isScrolling === true ? '0.3rem' :'108vw' };
+        }
+        .close {
+            position: absolute;
+            top: 1.5rem;
+            left: 2rem;
+        }
+    }
     `;
 
 const Hero = styled.div`
-    height: 45em;
+    height: 45.5em;
+    position: relative;
     .hero-div {
         display: flex;
         width: 100%;
@@ -484,9 +561,9 @@ const Hero = styled.div`
     
     img {
         position: absolute;
-        height: 100vh;
+        height: 45.5em;
         object-fit: contain;
-        z-index: 99999;
+        z-index: 999;
     }
 
     .intro-1 {
@@ -567,6 +644,31 @@ const Hero = styled.div`
             visibility: hidden;
         }
     }
+
+@media screen and (max-width: 700px) {
+    img {
+        z-index: -1;
+        width: 100vw;
+        height: fit-content;
+        postition: relative;
+        bottom: 12rem;
+    }
+
+    .intro-2 {
+        top: 2.5rem;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+    .intro-3 {
+        left: 0;
+        width: 100%;
+        text-align: center;
+        top: 5.4rem;
+        font-size: 4rem;
+        z-index: -2;
+    }
+}
     `;
 
 const Map = styled.div<{ hoveredElement: string }>`
@@ -656,6 +758,24 @@ const Map = styled.div<{ hoveredElement: string }>`
         margin: 0;
         font-family: Leaugue-Spartan;
     }
+
+    @media screen and (max-width: 700px) { 
+            position: absolute;
+            left: -3rem;
+            margin-bottom: 2rem;
+            padding-right: 0rem;
+            width: 110%;
+            .explanations-placeholder {
+                position: absolute;
+                font-size: 13px;
+                left: 90vw;
+            }
+            [id*=${({ hoveredElement}) => hoveredElement}] {
+                width: 34vw;
+                transform: translateX(-38vw);
+
+            }
+    }
     `;
 
 const PortfolioWrapper = styled.div<{ hoveredElement: string }>`
@@ -663,7 +783,7 @@ const PortfolioWrapper = styled.div<{ hoveredElement: string }>`
     
     .main-port{
         position: relative;
-        top: -2vw;
+        top: -5vw;
         display: grid;
         grid-template-columns: repeat(2, 1.2fr);
         .portfolio-image {
@@ -720,9 +840,28 @@ const PortfolioWrapper = styled.div<{ hoveredElement: string }>`
         text-align: center;
         z-index: -2;
     }
+    @media screen and (max-width: 700px) { 
+        text {
+            visibility: hidden;
+        }
+        .main-port{
+            grid-template-columns: repeat(1, 1.2fr);
+            .portfolio-image, .tester {
+                width: 60vw;
+                height: 60vw;
+                margin: auto;
+            }
+            .portfolio-name {
+                font-size: 30px;
+                width: 180px;
+                left: 42vw;
+            }
+        }
+
+
     `;
 
-    const DownloadCVWrapper = styled.div`
+const DownloadCVWrapper = styled.div`
     .portfolio-button {
         text-decoration: none;
         display: flex;
@@ -770,6 +909,15 @@ const InterestsWrapper = styled.div`
         text-align: justify;
         font-size: 1rem;
 
+    }
+    @media screen and (max-width: 700px) { 
+        .topic {
+            font-size: 40px;
+        }
+        .expo {
+            height: 50vh;
+            overflow: scroll;
+        }
     }
 `;
 
@@ -820,4 +968,18 @@ const ContactWrapper = styled.div`
         height: 22rem;
         z-index: -1;
     }
+    @media screen and (max-width: 700px) { 
+        .contact-left::before {
+            left: 5vw;
+            width: 90vw;
+        }
+        .contact-left {
+            max-width: 40%;
+            flex-basis: 10%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+        .contact-right {
+            flex-basis: 60%;
+        }
     `; 
